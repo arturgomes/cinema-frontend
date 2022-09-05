@@ -6,6 +6,8 @@ import { Movie } from '../shared/modules/movie/model';
 import { addUser } from '../shared/modules/user/api/add-user';
 import { getMovies } from '../shared/modules/movie/api/get-movies';
 import { range } from '../shared/utils/common';
+import React from 'react';
+import { resolve } from 'path';
 
 export interface HookData {
   data: User;
@@ -37,6 +39,14 @@ const useSignUp = (): HookData => {
 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [movieId, setMovieId] = useState<string | undefined>(undefined);
+  // I was wondering if movieId and setMovieId are really necessary
+  useEffect(() => {
+    let defMovies = async () => {
+      let res = await getMovies()
+      setMovies(res)
+    }
+    defMovies();
+  }, [])
 
   const sitRows = useMemo(() => {
     return range(1, 15);
@@ -49,23 +59,66 @@ const useSignUp = (): HookData => {
   // FILL IN THE GAPS
   // Handlers go here
   // ...
+  const handleChangeData = (fieldName: string, value: string): void => {
+    // change data object attribute according to the fieldName and value
+    setData((state: User) => ({ ...state, [fieldName as keyof User]: value }))
+
+  }
+
+  const handleChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    if (e.target.files) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+
+      reader.addEventListener('load', async () => {
+        const res = reader.result;
+
+        if (res && typeof res === 'string') {
+          handleChangeData('avatarBase64', reader.result as string)
+        }
+      }, false);
+    }
+  };
+
+  const handleChangeMovieId = (movieId: string): void => {
+    setData((v: User) => ({
+      ...v,
+      movie: movies.find(movie => (movie.id === movieId)),
+    }));
+    setMovieId(movieId)
+  };
+
+  const handleChangeSitRow = (value: any): void => {
+    setData((v: User) => ({
+      ...v,
+      sitRow: parseInt(value),
+    }));
+  };
+
+  const handleChangeSitPlace = (value: any): void => {
+    setData((v: User) => ({
+      ...v,
+      sitPlace: parseInt(value),
+    }));
+  };
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-
     await addUser(data);
 
     navigate('/success');
   };
 
   const handleClearAvatar = (): void => {
-    setData((v) => ({
+    setData((v: User) => ({
       ...v,
       avatarBase64: '',
     }));
   };
+
 
   return {
     data,
