@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { User } from '../shared/modules/user/model';
@@ -40,17 +40,16 @@ const useSignUp = (): HookData => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [movieId, setMovieId] = useState<string | undefined>(undefined);
   // I was wondering if movieId and setMovieId are really necessary
-  useEffect(() => {
-    let defMovies = async () => {
-      await api.get('/movies').then(
-        (response: any) => {
-          let res = response.data;
-          setMovies(res)
-        }
-      )
-    }
-    defMovies();
+  const fetchData = useCallback(() => {
+    api.get('/movies').then(
+      (response: any) => {
+
+        let res = response.data;
+        setMovies(res)
+      }
+    )
   }, [])
+  useEffect(() => fetchData(), [fetchData])
 
   const sitRows = useMemo(() => {
     return range(1, 15);
@@ -94,14 +93,14 @@ const useSignUp = (): HookData => {
   };
 
   const handleChangeSitRow = (value: any): void => {
-    setData((v: User) => ({
+    sitRows.includes(parseInt(value)) && setData((v: User) => ({
       ...v,
       sitRow: parseInt(value),
     }));
   };
 
   const handleChangeSitPlace = (value: any): void => {
-    setData((v: User) => ({
+    sitPlaces.includes(parseInt(value)) && setData((v: User) => ({
       ...v,
       sitPlace: parseInt(value),
     }));
@@ -110,11 +109,15 @@ const useSignUp = (): HookData => {
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
-    e.preventDefault();
-    console.log(data)
-    await api.post('/register', data)
+    try {
+      e.preventDefault();
+      console.log(data)
+      await api.post('/register', data)
 
-    navigate('/success');
+      navigate('/success');
+    }
+    catch (err) { }
+
   };
 
   const handleClearAvatar = (): void => {
