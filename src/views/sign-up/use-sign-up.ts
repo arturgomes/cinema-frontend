@@ -112,8 +112,7 @@ const useSignUp = (): HookData => {
   ): Promise<void> => {
     e.preventDefault();
     console.log(data)
-    await api.post('/register', data).then(response => console.log(response.data))
-    // await addUser(data);
+    await api.post('/register', data)
 
     navigate('/success');
   };
