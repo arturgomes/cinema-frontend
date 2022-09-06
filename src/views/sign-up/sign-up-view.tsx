@@ -35,7 +35,6 @@ const SignUpView: React.FC<HookData> = (): ReactElement => {
     handleChangeSitPlace,
   } = useSignUp();
 
-
   return (
     <Wrapper>
       <Menu />
@@ -71,9 +70,13 @@ const SignUpView: React.FC<HookData> = (): ReactElement => {
               <Input type="text" value={data.phone} onChange={(e) => handleChangeData("phone", e.target.value)} />
             </Label><Label>
               Movie:
+              {/* {movies && (<Select onChange={(e) => console.log(e.target.labels)} > */}
               {movies && (<Select onChange={(e) => handleChangeMovieId(e.target.value)} >
-                <option>--</option>
-                {movies.map((movie) => (<option key={movie.id} value={movie.id}>{movie.title} - {getLocaleDateString(movie.startDate)}</option>))}
+                <option value=''>--</option>
+                {movies.map((movie) => (<option key={movie._id}
+                  value={movie._id}>
+                  {movie.title} - {getLocaleDateString(movie.startDate)}
+                </option>))}
               </Select>)}
             </Label><Label>
               Sit Row:

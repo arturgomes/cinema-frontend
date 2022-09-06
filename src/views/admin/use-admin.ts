@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import api from '../../services/api';
 
 
 import { getUsers } from '../shared/modules/user/api/get-users';
@@ -15,7 +16,12 @@ const useAdmin = (): HookData => {
   // Load users ...
   useEffect(() => {
     let fetchUsers = async () => {
-      setUsers(await getUsers())
+      await api.get('/users').then(
+        (response: any) => {
+          let res = response.data;
+          setUsers(res)
+        }
+      )
     }
     fetchUsers();
   }, [])

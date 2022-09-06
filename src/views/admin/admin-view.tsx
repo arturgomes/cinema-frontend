@@ -9,7 +9,6 @@ import { Wrapper, Table, Thead, Tbody, Th, Tr, Td } from './admin.styles';
 import { User } from '../shared/modules/user/model';
 
 const AdminView: React.FC<HookData> = ({ users }): ReactElement => {
-  console.log(users)
   return (
     <Wrapper>
       <Menu />
@@ -23,14 +22,16 @@ const AdminView: React.FC<HookData> = ({ users }): ReactElement => {
               {/* FILL IN THE GAPS */}
               {/* Users and selected movies go here ... */}
               <Thead>
-                <Th>User first name</Th>
-                <Th>User last name</Th>
-                <Th>Avatar</Th>
-                <Th>Email</Th>
-                <Th>Phone</Th>
-                <Th>Selected movie</Th>
-                <Th>Cinema session dates</Th>
-                <Th>Row and seat number</Th>
+                <tr>
+                  <Th>User first name</Th>
+                  <Th>User last name</Th>
+                  <Th>Avatar</Th>
+                  <Th>Email</Th>
+                  <Th>Phone</Th>
+                  <Th>Selected movie</Th>
+                  <Th>Cinema session dates</Th>
+                  <Th>Row and seat number</Th>
+                </tr>
               </Thead>
               <Tbody>
                 {users.map((user: User) => (<Tr key={user.avatarBase64}>

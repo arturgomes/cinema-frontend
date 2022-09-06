@@ -1,5 +1,5 @@
 export interface Movie {
-  id: string;
+  _id: string;
   title: string;
   duration: number; // milliseconds
   startDate: Date;
