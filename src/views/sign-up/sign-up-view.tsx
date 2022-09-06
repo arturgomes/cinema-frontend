@@ -36,7 +36,7 @@ const SignUpView: React.FC<HookData> = (): ReactElement => {
   } = useSignUp();
 
   return (
-    <Wrapper>
+    <Wrapper data-testid='signup-1'>
       <Menu />
       <Form onSubmit={handleSubmit}>
         <Row center="xs">
@@ -91,7 +91,7 @@ const SignUpView: React.FC<HookData> = (): ReactElement => {
                 {sitPlaces && sitPlaces.map(sit => (<option key={sit} value={sit}>{sit}</option>))}
               </Select>
             </Label>
-            <Button type="submit">Save</Button>
+            <Button id="#submit" type="submit">Save</Button>
           </Col>
         </Row>
       </Form>
