@@ -35,7 +35,6 @@ const SignUpView: React.FC<HookData> = (): ReactElement => {
     handleChangeSitPlace,
   } = useSignUp();
 
-
   return (
     <Wrapper>
       <Menu />
@@ -74,8 +73,8 @@ const SignUpView: React.FC<HookData> = (): ReactElement => {
               {/* {movies && (<Select onChange={(e) => console.log(e.target.labels)} > */}
               {movies && (<Select onChange={(e) => handleChangeMovieId(e.target.value)} >
                 <option value=''>--</option>
-                {movies.map((movie) => (<option key={movie.id}
-                  value={movie.id}>
+                {movies.map((movie) => (<option key={movie._id}
+                  value={movie._id}>
                   {movie.title} - {getLocaleDateString(movie.startDate)}
                 </option>))}
               </Select>)}

@@ -8,7 +8,7 @@ import { getMovies } from '../shared/modules/movie/api/get-movies';
 import { range } from '../shared/utils/common';
 import React from 'react';
 import { resolve } from 'path';
-
+import api from '../../services/api';
 export interface HookData {
   data: User;
   movies: Movie[];
@@ -42,8 +42,12 @@ const useSignUp = (): HookData => {
   // I was wondering if movieId and setMovieId are really necessary
   useEffect(() => {
     let defMovies = async () => {
-      let res = await getMovies()
-      setMovies(res)
+      await api.get('/movies').then(
+        (response: any) => {
+          let res = response.data;
+          setMovies(res)
+        }
+      )
     }
     defMovies();
   }, [])
@@ -84,7 +88,7 @@ const useSignUp = (): HookData => {
   const handleChangeMovieId = (movieId: string): void => {
     setData((v: User) => ({
       ...v,
-      movie: movies.find(movie => (movie.id === movieId)),
+      movie: movies.find(movie => (movie._id === movieId)),
     }));
     setMovieId(movieId)
   };
@@ -107,7 +111,9 @@ const useSignUp = (): HookData => {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    await addUser(data);
+    console.log(data)
+    await api.post('/register', data).then(response => console.log(response.data))
+    // await addUser(data);
 
     navigate('/success');
   };

@@ -9,7 +9,6 @@ import { Wrapper, Table, Thead, Tbody, Th, Tr, Td } from './admin.styles';
 import { User } from '../shared/modules/user/model';
 
 const AdminView: React.FC<HookData> = ({ users }): ReactElement => {
-  console.log(users)
   return (
     <Wrapper>
       <Menu />
