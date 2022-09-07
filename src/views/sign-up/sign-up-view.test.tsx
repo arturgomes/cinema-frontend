@@ -1,5 +1,4 @@
 import { render, screen, cleanup } from '@testing-library/react'
-import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
 import SignUpView from './sign-up-view'
@@ -11,14 +10,13 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 describe('SignUpView', () => {
-  let wrapper: any;
+  afterEach(cleanup);
+  it('expects to find an input for firstName', async () => {
+    const props: any = {}
+    await render(<MemoryRouter><SignUpView {...props} /></MemoryRouter>)
+    const input = await screen.findByRole('input-firstName')
+    expect(input).toBeValid()
+  })
 
-  beforeEach(() => {
-    wrapper = mount(<MemoryRouter><SignUpView /></MemoryRouter>);
-  });
-
-  it('renders', () => {
-    expect(wrapper).not.toBeNull();
-  });
 
 })

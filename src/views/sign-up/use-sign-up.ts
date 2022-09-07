@@ -3,12 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { User } from '../shared/modules/user/model';
 import { Movie } from '../shared/modules/movie/model';
-import { addUser } from '../shared/modules/user/api/add-user';
-import { getMovies } from '../shared/modules/movie/api/get-movies';
 import { range } from '../shared/utils/common';
 import React from 'react';
-import { resolve } from 'path';
 import api from '../../services/api';
+
 export interface HookData {
   data: User;
   movies: Movie[];

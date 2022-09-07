@@ -36,7 +36,7 @@ const SignUpView: React.FC<HookData> = (): ReactElement => {
   } = useSignUp();
 
   return (
-    <Wrapper data-testid='signup-1'>
+    <Wrapper>
       <Menu />
       <Form onSubmit={handleSubmit}>
         <Row center="xs">
@@ -58,6 +58,7 @@ const SignUpView: React.FC<HookData> = (): ReactElement => {
                 type="text"
                 value={data.firstName}
                 onChange={(e) => handleChangeData("firstName", e.target.value)}
+                role='input-firstName'
               />
             </Label><Label>
               Last Name:
