@@ -16,8 +16,17 @@ You will also see any lint errors in the console.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+I did some research on testing with React and had problem
+with testing hooks. This was my first time testing react
+components.
+
+I tried locally with simple examples such as a counter (with increment and decrement),
+and got success on it. however, when I took the `useSignUp` hook,
+everything I studied in terms of testing for the challenge was 
+not helping me to create the unit tests I needed.
+
+Therefore, I'll take it as a challenge for my next few days,
+to come up with a set of test cases for the hook.
 
 ### `yarn build`
 
